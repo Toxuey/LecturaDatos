@@ -37,7 +37,7 @@
         db.collection('datos_diarios').get().then((snapshot) => {
             snapshot.forEach((doc) => {
                 let li = document.createElement('li');
-                li.textContent = doc.data().info + " - Fecha: " + doc.data().fecha;
+                li.textContent = doc.data().fecha + " - Fecha: " + doc.data().info;
                 dataList.appendChild(li);
             });
         });
