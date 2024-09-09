@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mostrar Datos desde Firebase</title>
+</head>
+<body>
+    <h1>Datos Diarios</h1>
+    <ul id="data-list"></ul>
+
+   <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyB2yN_W0-8KPsUSeuTHW_8-UowJrtf1Tzw",
+    authDomain: "ejemplopaginawebborrar.firebaseapp.com",
+    projectId: "ejemplopaginawebborrar",
+    storageBucket: "ejemplopaginawebborrar.appspot.com",
+    messagingSenderId: "866708912226",
+    appId: "1:866708912226:web:bc78caf847800fcf8ff93b",
+    measurementId: "G-4SJC24XDKL"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+
+        // Obtener datos de Firestore
+        const dataList = document.getElementById('data-list');
+        db.collection('datos_diarios').get().then((snapshot) => {
+            snapshot.forEach((doc) => {
+                let li = document.createElement('li');
+                li.textContent = doc.data().info + " - Fecha: " + doc.data().fecha;
+                dataList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
