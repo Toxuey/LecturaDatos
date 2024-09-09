@@ -12,7 +12,7 @@
    <script type="module">
       // Importar las funciones necesarias de Firebase
       import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
-      import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+      import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
 
       // Configuración de Firebase
       const firebaseConfig = {
@@ -31,13 +31,20 @@
       // Inicializar Firestore
       const db = getFirestore(app);
 
-      // Obtener datos de la colección 'datos_diarios' y mostrarlos
+      // Obtener referencia a la colección 'datos_diarios'
       const dataList = document.getElementById('data-list');
-      const querySnapshot = await getDocs(collection(db, 'datos_diarios'));
-      querySnapshot.forEach((doc) => {
-        let li = document.createElement('li');
-        li.textContent = doc.data().fecha + " - " + doc.data().info;
-        dataList.appendChild(li);
+
+      // Configurar el listener en tiempo real
+      onSnapshot(collection(db, 'datos_diarios'), (querySnapshot) => {
+          // Limpiar la lista antes de agregar los nuevos datos
+          dataList.innerHTML = '';
+          
+          // Iterar sobre los documentos y agregarlos a la lista
+          querySnapshot.forEach((doc) => {
+              let li = document.createElement('li');
+              li.textContent = doc.data().fecha + " - " + doc.data().info;
+              dataList.appendChild(li);
+          });
       });
    </script>
 </body>
